@@ -1,5 +1,5 @@
 // main.js
-import { top100Passwords } from './top100Passwords.js';
+import { top100Passwords } from './top100passwords.js';
 
 const currentYear = new Date().getFullYear();
 
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         const password = input.value.trim();
+        const passwordIndex = top100Passwords.indexOf(password);
 
         if (password === correctPassword) {
             response.textContent = 'Access Granted! Welcome.';
@@ -43,14 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Dear Diary,</p>
                 <p>Today was another hard day at school. It feels like no matter what I do, they just won’t leave me alone. I tried to be brave and ignore them, but their words hurt so much. I wish I could tell someone how I feel, but I’m scared they’ll think I’m weak. Writing this down helps a little, but I wish things were different...</p>
                 <p>Maybe tomorrow will be better. I just have to keep going.</p>
-                <p>- A 14-year-old girl</p>
+                <p>Rea</p>
             `;
             diaryContainer.style.display = 'block';
-        } else if (top100Passwords.includes(password)) {
-            response.textContent = 'Well done, your guess was in one of the top 100 passwords!';
+				} else if (password.toLowerCase() ===  correctPassword.toLowerCase()){
+            response.textContent = "That is a really interesting guess, but maybe the diary needs a captial letter?"
+            response.style.color = 'orange';
+        } else if (passwordIndex != -1) {
+            response.textContent = `Good guess! That is the ${passwordIndex + 1}${getOrdinalSuffix(passwordIndex + 1)} most common password acording to Wikipedia!`; 
+            response.style.color = 'orange';
+        } else if (password.toLowerCase().includes("2025")) {
+            response.textContent = `Interesting choice! You included the year. Lots of people do that when they have to change their password a lot. Often computers want you to add a puncuation character as well...`;
             response.style.color = 'orange';
         } else if (password.toLowerCase().includes(dogName.toLowerCase())) {
-            response.textContent = `Interesting choice! You included the dog's name, "${dogName}".`;
+            response.textContent = `Interesting choice! You included the dog's name, "${dogName}". But maybe Rea has to change the password at least once a year.`;
             response.style.color = 'orange';
         } else {
             response.textContent = 'Error: Incorrect password. Please try again.';
@@ -59,3 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+// Function to get ordinal suffix (1st, 2nd, 3rd, etc.)
+function getOrdinalSuffix(rank) {
+    const j = rank % 10,
+          k = rank % 100;
+    if (j === 1 && k !== 11) return 'st';
+    if (j === 2 && k !== 12) return 'nd';
+    if (j === 3 && k !== 13) return 'rd';
+    return 'th';
+}
