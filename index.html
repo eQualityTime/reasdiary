@@ -3,95 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rea's Secret Diary</title>
+    <title>Rea's Profile</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
+        * {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
+
+        body {
+            background-color: #fafafa;
+        }
+
         .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 30px 20px;
         }
-        h1 {
-            text-align: center;
-            color: #333;
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 44px;
         }
-        img {
-            display: block;
-            margin: 0 auto 20px;
-            border-radius: 5px;
-            max-width: 100%;
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 100px;
+            object-fit: cover;
         }
-        p {
-            line-height: 1.6;
-            color: #555;
+
+        .profile-info h1 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 12px;
         }
-        form {
-            margin-top: 20px;
+
+        .profile-stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 20px;
         }
-        input {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .stat {
+            font-size: 16px;
         }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 1em;
+
+        .stat strong {
+            font-weight: 600;
+        }
+
+        .bio {
+            font-size: 16px;
+            line-height: 1.5;
+            max-width: 500px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 40px;
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 3px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        #response {
-            margin-top: 15px;
-            font-size: 1em;
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .navigation {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+
+        .nav-container {
+            max-width: 935px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
             font-weight: bold;
+            color: #262626;
+            text-decoration: none;
         }
-        #diary-container {
-            margin-top: 20px;
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #262626;
+            font-size: 14px;
+        }
+
+        .follow-button {
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 5px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .follow-button:hover {
+            background: #0081d6;
+        }
+
+        /* Modal styles */
+        .modal {
             display: none;
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-image {
+            flex: 1;
+            max-width: 600px;
+            background: #000;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            width: 300px;
+            padding: 20px;
+            border-left: 1px solid #dbdbdb;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-profile-pic {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        .modal-username {
+            font-weight: 600;
+            color: #262626;
+        }
+
+        .modal-caption {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #262626;
+            margin-bottom: 12px;
+        }
+
+        .modal-stats {
+            color: #8e8e8e;
+            font-size: 14px;
+        }
+
+        .close-modal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="#" class="logo">PhotoShare</a>
+            <div class="nav-actions">
+               <a href="photologin.html" class="nav-button">Login</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>Rea's Secret Diary</h1>
-        <img src="cover.png" alt="Diary Cover">
-        <p>
-            Hi, I'm Rea! I'm 14 years old and I love gymnastics, swimming, and my dog Sparkles (he's three!).
-            Life can be a little complicated sometimes, but I always keep my secrets in my diary.
-            Think you can guess my password to unlock it?
-        </p>
-        <form id="password-form">
-            <label for="password-input">Enter the password to unlock the diary:</label>
-            <input type="password" id="password-input" placeholder="Password" required>
-            <button type="submit">Submit</button>
-        </form>
-        <p id="response"></p>
-        <div id="diary-container"></div>
+        <header class="profile-header">
+            <img src="images/profile.png" alt="Rea's profile picture" class="profile-pic">
+            <div class="profile-info">
+                <h1>rea_gymnastics</h1>
+                <div class="profile-stats">
+                    <span class="stat"><strong>127</strong> posts</span>
+                    <span class="stat"><strong>3,542</strong> followers</span>
+                    <span class="stat"><strong>891</strong> following</span>
+                </div>
+                <button class="follow-button">Follow</button>
+                <div class="bio">
+                    <p>🤸‍♀️ Level 10 Gymnast<br>
+                    🐕 Dog mom to Sparkles<br>
+                    ✨ Living life upside down<br>
+                    🌟 National Champion 2024</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="photo-grid">
+            <div class="photo-item" data-caption="Nailed my beam routine at nationals! So grateful for this journey 🏆">
+                <img src="images/comp.png" alt="Gymnastics competition">
+                <div class="photo-overlay">❤️ 1,234</div>
+            </div>
+            <div class="photo-item" data-caption="OMG girls!!! Look at the photo I found from when I first got Sparkles!!!!'back in the day'!!! my hair is hilarious!!!">
+                <img src="images/backintheday.png" alt="Training session">
+                <div class="photo-overlay">❤️ 956</div>
+            </div>
+            <div class="photo-item" data-caption="It's teamwork that makes the dream work!!!!!!">
+                <img src="images/team.png" alt="With Sparkles the dog">
+                <div class="photo-overlay">❤️ 2,341</div>
+            </div>
+            <div class="photo-item" data-caption="Dog spam!!!!!! #sorrynotsorry">
+                <img src="images/cutest.png" alt="Balance beam routine">
+                <div class="photo-overlay">❤️ 1,567</div>
+            </div>
+            <div class="photo-item" data-caption="Sparkles is my world #blessed">
+                <img src="images/dog.png" alt="Sparkles">
+                <div class="photo-overlay">❤️ 1,890</div>
+            </div>
+            <div class="photo-item" data-caption="So wonderful to live somewhere we get sunrises like this #peace #love">
+                <img src="images/sunrise.png" alt="Floor exercise">
+                <div class="photo-overlay">❤️ 2,123</div>
+            </div>
+        </main>
     </div>
-    <script type="module" src="main.js"></script>
+
+    <!-- Modal -->
+    <div class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <div class="modal-image">
+                <img src="" alt="Modal image">
+            </div>
+            <div class="modal-details">
+                <div class="modal-header">
+                    <img src="images/profile.png" alt="Profile picture" class="modal-profile-pic">
+                    <span class="modal-username">rea_gymnastics</span>
+                </div>
+                <p class="modal-caption"></p>
+                <div class="modal-stats">
+                    <span class="modal-likes"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.querySelector('.modal');
+            const modalImage = modal.querySelector('.modal-image img');
+            const modalCaption = modal.querySelector('.modal-caption');
+            const modalLikes = modal.querySelector('.modal-likes');
+            const closeModal = modal.querySelector('.close-modal');
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    const likes = item.querySelector('.photo-overlay').textContent;
+                    const caption = item.dataset.caption;
+
+                    modalImage.src = img.src;
+                    modalImage.alt = img.alt;
+                    modalCaption.textContent = caption;
+                    modalLikes.textContent = likes;
+                    modal.classList.add('active');
+                });
+            });
+
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-
