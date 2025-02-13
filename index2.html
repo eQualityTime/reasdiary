@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User's Profile - Private</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .profile-stats span strong {
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 16px;
+            color: #8e8e8e;
+        }
+
+        .private-message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #262626;
+        }
+
+        .follow-button {
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .follow-button:hover {
+            background: #0081d6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images/private_profile.png" alt="User's profile picture" class="profile-pic">
+        <h1>play.poet.wedge</h1>
+        <div class="profile-stats">
+            <span><strong>120</strong> posts</span>
+            <span><strong>172</strong> followers</span>
+            <span><strong>300</strong> following</span>
+        </div>
+        <p>This account is private</p>
+        <p class="private-message">Follow play.poet.wedge to see their photos and videos.</p>
+        <button class="follow-button">Follow</button>
+    </div>
+</body>
+</html>
+

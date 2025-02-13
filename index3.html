@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madlad2329's Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 44px;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 100px;
+            object-fit: cover;
+        }
+
+        .profile-info h1 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            font-size: 16px;
+        }
+
+        .stat strong {
+            font-weight: 600;
+        }
+
+        .bio {
+            font-size: 16px;
+            line-height: 1.5;
+            max-width: 500px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 40px;
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .navigation {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+
+        .nav-container {
+            max-width: 935px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #262626;
+            text-decoration: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #262626;
+            font-size: 14px;
+        }
+
+        .follow-button {
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 5px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .follow-button:hover {
+            background: #0081d6;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-image {
+            flex: 1;
+            max-width: 600px;
+            background: #000;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            width: 300px;
+            padding: 20px;
+            border-left: 1px solid #dbdbdb;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-profile-pic {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        .modal-username {
+            font-weight: 600;
+            color: #262626;
+        }
+
+        .modal-caption {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #262626;
+            margin-bottom: 12px;
+        }
+
+        .modal-stats {
+            color: #8e8e8e;
+            font-size: 14px;
+        }
+
+        .close-modal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="#" class="logo">PhotoShare</a>
+            <div class="nav-actions">
+               <a href="photologin.html" class="nav-button">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="profile-header">
+            <img src="images/profile3.png" alt="Rea's profile picture" class="profile-pic">
+            <div class="profile-info">
+                <h1>Madlad2329</h1>
+                <div class="profile-stats">
+                    <span class="stat"><strong>3</strong> posts</span>
+                    <span class="stat"><strong>42</strong> followers</span>
+                    <span class="stat"><strong>99</strong> following</span>
+                </div>
+                <button class="follow-button">Follow</button>
+                <div class="bio">
+                  I'm NOT telling you!
+                </div>
+            </div>
+        </header>
+
+        <main class="photo-grid">
+            <div class="photo-item" data-caption="Stupid Buses! The 5 is always out of service! I have to walk 40 minutes home now! ">
+                <img src="images/bus.png" alt="It's a picture of a bus in Glasgow">
+                <div class="photo-overlay">❤️ 1</div>
+            </div>
+            <div class="photo-item" data-caption="Finally got my Octo 9 - it's over for you slugs Skibbi">
+                <img src="images/control.png" alt="Training session">
+                <div class="photo-overlay">❤️ 9</div>
+            </div>
+            <div class="photo-item" data-caption="Some smug scum tagging in our streets, you'd better watch yerself!!!!111!">
+                <img src="images/wall.png" alt="A wall">
+                <div class="photo-overlay">❤️ 23</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <div class="modal-image">
+                <img src="" alt="Modal image">
+            </div>
+            <div class="modal-details">
+                <div class="modal-header">
+                    <img src="images/profile.png" alt="Profile picture" class="modal-profile-pic">
+                    <span class="modal-username">rea_gymnastics</span>
+                </div>
+                <p class="modal-caption"></p>
+                <div class="modal-stats">
+                    <span class="modal-likes"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.querySelector('.modal');
+            const modalImage = modal.querySelector('.modal-image img');
+            const modalCaption = modal.querySelector('.modal-caption');
+            const modalLikes = modal.querySelector('.modal-likes');
+            const closeModal = modal.querySelector('.close-modal');
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    const likes = item.querySelector('.photo-overlay').textContent;
+                    const caption = item.dataset.caption;
+
+                    modalImage.src = img.src;
+                    modalImage.alt = img.alt;
+                    modalCaption.textContent = caption;
+                    modalLikes.textContent = likes;
+                    modal.classList.add('active');
+                });
+            });
+
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
