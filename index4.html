@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G's Profile</title>
+<link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="#" class="logo">PhotoShare</a>
+            <div class="nav-actions">
+               <a href="photologin.html" class="nav-button">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="profile-header">
+            <img src="images/holiday.jpg" alt="Rea's profile picture" class="profile-pic">
+            <div class="profile-info">
+                <h1>happy_trails</h1>
+                <div class="profile-stats">
+                    <span class="stat"><strong>2</strong> posts</span>
+                    <span class="stat"><strong>315</strong> followers</span>
+                    <span class="stat"><strong>326</strong> following</span>
+                </div>
+                <button class="follow-button">Follow</button>
+                <div class="bio">
+                    <p>Let me show you my world!
+                </div>
+            </div>
+        </header>
+
+        <main class="photo-grid">
+            <div class="photo-item" data-caption="As if my little sister is going to be coming here in September!">
+                <img src="images/coalhill.jpg" alt="School Photo">
+                <div class="photo-overlay">❤️ 1,234</div>
+            </div>
+            <div class="photo-item" data-caption="A week at the beach! See ya!!">
+                <img src="images/sand.jpg" alt="Training session">
+                <div class="photo-overlay">❤️ 956</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <div class="modal-image">
+                <img src="" alt="Modal image">
+            </div>
+            <div class="modal-details">
+                <div class="modal-header">
+                    <img src="images/profile.png" alt="Profile picture" class="modal-profile-pic">
+                    <span class="modal-username">rea_gymnastics</span>
+                </div>
+                <p class="modal-caption"></p>
+                <div class="modal-stats">
+                    <span class="modal-likes"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.querySelector('.modal');
+            const modalImage = modal.querySelector('.modal-image img');
+            const modalCaption = modal.querySelector('.modal-caption');
+            const modalLikes = modal.querySelector('.modal-likes');
+            const closeModal = modal.querySelector('.close-modal');
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    const likes = item.querySelector('.photo-overlay').textContent;
+                    const caption = item.dataset.caption;
+
+                    modalImage.src = img.src;
+                    modalImage.alt = img.alt;
+                    modalCaption.textContent = caption;
+                    modalLikes.textContent = likes;
+                    modal.classList.add('active');
+                });
+            });
+
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
