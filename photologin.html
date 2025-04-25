@@ -1,49 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PhotoShare</title>
-<link rel="stylesheet" href="login.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - PhotoShare</title>
+  <link rel="stylesheet" href="login.css" />
+  <style>
+    .password-wrapper {
+      position: relative;
+    }
+    #toggle-password {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navigation">
-        <div class="nav-container">
-            <a href="index.html" class="logo">PhotoShare</a>
-        </div>
-    </nav>
+  <nav class="navigation">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PhotoShare</a>
+    </div>
+  </nav>
 
-    <main>
-        <div class="login-container">
-            <form class="password-form" id="password-form">
-                <div class="form-group">
-                    <label for="username">Username or Email</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <p class="error-message" id="errorMessage">Invalid username or password</p>
-                <p id="response"></p>
-								<!-- 2FA Section (Hidden by Default) -->
-											<div id="twofa-container" style="display: none;">
-													<label for="twofa-code">Enter 2FA Code:</label>
-													<input type="text" id="twofa-code" placeholder="6-digit code" maxlength="6">
-													<button id="submit-2fa">Submit Code</button>
-											</div>
-                <button type="submit" class="login-button">Log In</button>
-                <div class="divider">OR</div>
-                <a href="#" class="forgot-password">Forgot password?</a>
-            </form>
+  <main>
+    <div class="login-container">
+      <form class="password-form" id="password-form">
+        <div class="form-group">
+          <label for="username">Username or Email</label>
+          <input type="text" id="username" name="username" required />
         </div>
-        <div id="diary-container"></div>
-        <div class="signup-container">
-            Don't have an account? <a href="#" class="signup-link">Sign up</a>
-        </div>
-    </main>
 
-    <script type="module" src="main.js">
-    </script>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" name="password" required />
+            <button type="button" id="toggle-password" aria-label="Toggle password visibility">👁️</button>
+          </div>
+        </div>
+
+        <p class="error-message" id="errorMessage">Invalid username or password</p>
+        <p id="response"></p>
+
+        <!-- 2FA Section (Hidden by Default) -->
+        <div id="twofa-container" style="display: none;">
+          <label for="twofa-code">Enter 2FA Code:</label>
+          <input type="text" id="twofa-code" placeholder="6-digit code" maxlength="6" />
+          <button id="submit-2fa">Submit Code</button>
+        </div>
+
+        <button type="submit" class="login-button">Log In</button>
+        <div class="divider">OR</div>
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </form>
+    </div>
+
+    <div id="diary-container"></div>
+
+    <div class="signup-container">
+      Don't have an account? <a href="#" class="signup-link">Sign up</a>
+    </div>
+  </main>
+
+  <script type="module" src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const togglePassword = document.getElementById('toggle-password');
+      const passwordField = document.getElementById('password');
+
+      togglePassword.addEventListener('click', () => {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+      });
+    });
+  </script>
 </body>
 </html>
+
